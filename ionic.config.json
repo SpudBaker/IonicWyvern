@@ -1,0 +1,7 @@
+{
+  "name": "IonicWyvern",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
