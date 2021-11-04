@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "wyvern-42d25": {
+      "hosting": {
+        "app": [
+          "wyvern-42d25"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "wyvern-42d25"
+  }
+}

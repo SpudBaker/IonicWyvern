@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 @Component({
   selector: 'app-home',
@@ -7,6 +8,10 @@ import { Component } from '@angular/core';
 })
 export class HomePage {
 
-  constructor() {}
+  constructor(private db: AngularFirestore) {
+    this.db.doc('/foo/foo').snapshotChanges().subscribe(snap => {
+      console.log(snap.payload.data());
+    });
+  }
 
 }
