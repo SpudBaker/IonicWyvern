@@ -1,0 +1,85 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Wyvern Game - Login
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class='outerDiv' [class]="initialised?'visible':'invisible'">
+  <div *ngIf="user$ | async as user; else elseBlock">
+    <ion-grid>
+    <ion-row>
+      <ion-col size="5"></ion-col>
+      <ion-col size="2">
+       {{user.email}}
+      </ion-col>
+      <ion-col size="5"></ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="5"></ion-col>
+      <ion-col size="2">
+        <ion-button (click)="logOut()" expand="block" color="primary">Log Out</ion-button>
+      </ion-col>
+      <ion-col size="5"></ion-col>
+    </ion-row>
+  </ion-grid>
+  </div>
+
+  <ng-template #elseBlock>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="5"></ion-col>
+      <ion-col>
+       Log In:
+      </ion-col>
+      <ion-col size="5"></ion-col>
+   </ion-row>
+    <ion-row>
+      <ion-col size="5"></ion-col>
+      <ion-col>
+        <ion-input [(ngModel)]="inputEmail" color="grey" placeholder="enter email"></ion-input>
+      </ion-col>
+      <ion-col size="5"></ion-col>
+   </ion-row>
+   <ion-row>
+      <ion-col size="5"></ion-col>
+      <ion-col>
+        <ion-input [(ngModel)]="inputPassword" type="password" color="grey" placeholder="enter password"></ion-input>
+      </ion-col>
+      <ion-col size="5"></ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="5"></ion-col>
+      <ion-col>
+        <ion-button (click)="login()" expand="block" color="primary">Log In</ion-button>
+      </ion-col>
+      <ion-col size="5"></ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="5"></ion-col>
+      <ion-col>
+        <BR/>
+        <BR/>
+      </ion-col>
+      <ion-col size="5"></ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="5"></ion-col>
+      <ion-col>
+        New User?
+      </ion-col>
+      <ion-col size="5"></ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="5"></ion-col>
+      <ion-col>
+        <ion-button (click)="register()" expand="block" color="primary">Register</ion-button>
+      </ion-col>
+      <ion-col size="5"></ion-col>
+    </ion-row>
+   </ion-grid>
+  </ng-template>
+  </div>
+</ion-content>
