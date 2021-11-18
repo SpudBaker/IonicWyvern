@@ -29,19 +29,26 @@ export class LoginPage implements OnDestroy {
     this.userSubscription.unsubscribe();
   }
 
-  login(){
+  submit(){
     this.loginErrMessage = null;
+    if ((!this.inputEmail) || (!this.inputPassword)){
+      this.loginErrMessage = 'Enter both email and password';
+      return;
+    }
     signInWithEmailAndPassword(this.auth, this.inputEmail, this.inputPassword).catch(e => {
       let err = e as FirebaseError;
       switch (err.code){
+        case ('auth/invalid-email'):
+          this.loginErrMessage = 'Enter the correct email format';
+          break;
         case('auth/user-not-found'):
-          this.loginErrMessage = 'email not recognised, have you registered?';
+          this.register();
           break;
         case ('auth/wrong-password'):
-          this.loginErrMessage = 'wrong password - please try again or reset';
+          this.loginErrMessage = 'Wrong password - try again or reset';
           break;
         case ('auth/too-many-requests'):
-          this.loginErrMessage = 'too many attempts and account is locked. Please reset password.';
+          this.loginErrMessage = 'Too many attempts and account is locked. Reset password.';
           break;
         default:
           this.loginErrMessage = err.code;
@@ -52,15 +59,15 @@ export class LoginPage implements OnDestroy {
   async resetPassword(){
     this.loginErrMessage = null;
     if (!this.inputEmail){
-      this.loginErrMessage = 'Please enter an email address to reset your password';
+      this.loginErrMessage = 'Enter an email to reset your password';
       return;
     }
     await sendPasswordResetEmail(this.auth, this.inputEmail)
-    .then(() => this.loginErrMessage = 'Please check your inbox for an email with a password reset link')
+    .then(() => this.loginErrMessage = 'Check your inbox for an email with a password reset link')
     .catch(err => {
       switch (err.code){
         case ('auth/invalid-email'):
-          this.loginErrMessage = 'Please enter the correct email format';
+          this.loginErrMessage = 'Enter the correct email format';
         default:
           this.loginErrMessage = err.code;
       };
@@ -73,22 +80,18 @@ export class LoginPage implements OnDestroy {
 
   register(){
     this.loginErrMessage = null;
-    if ((!this.inputEmail) || (!this.inputPassword)){
-      this.loginErrMessage = 'Please enter an email address and password to register an account';
-      return;
-    }
     createUserWithEmailAndPassword(this.auth, this.inputEmail, this.inputPassword)
     .then(err => this.loginErrMessage = err.toString())
     .catch(err => {
       switch (err.code){
         case ('auth/invalid-email'):
-          this.loginErrMessage = 'Please enter the correct email format';
+          this.loginErrMessage = 'Enter the correct email format';
           break;
         case ('auth/email-already-in-use'):
-          this.loginErrMessage = 'This email address is alreday registered';
+          this.loginErrMessage = 'Email address is alreday registered';
           break;
         case ('auth/weak-password'):
-          this.loginErrMessage = 'Please create a stronger password when registering';
+          this.loginErrMessage = 'Create a stronger password when registering';
           break;
         default:
           this.loginErrMessage = err.code;
