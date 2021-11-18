@@ -36,13 +36,15 @@ export class LoginPage implements OnDestroy {
       switch (err.code){
         case('auth/user-not-found'):
           this.loginErrMessage = 'email not recognised, have you registered?';
-          return;
+          break;
         case ('auth/wrong-password'):
           this.loginErrMessage = 'wrong password - please try again or reset';
-          return;
+          break;
         case ('auth/too-many-requests'):
           this.loginErrMessage = 'too many attempts and account is locked. Please reset password.';
-          return;
+          break;
+        default:
+          this.loginErrMessage = err.code;
       }
     });
   }
@@ -59,6 +61,8 @@ export class LoginPage implements OnDestroy {
       switch (err.code){
         case ('auth/invalid-email'):
           this.loginErrMessage = 'Please enter the correct email format';
+        default:
+          this.loginErrMessage = err.code;
       };
     });
   }
@@ -79,6 +83,15 @@ export class LoginPage implements OnDestroy {
       switch (err.code){
         case ('auth/invalid-email'):
           this.loginErrMessage = 'Please enter the correct email format';
+          break;
+        case ('auth/email-already-in-use'):
+          this.loginErrMessage = 'This email address is alreday registered';
+          break;
+        case ('auth/weak-password'):
+          this.loginErrMessage = 'Please create a stronger password when registering';
+          break;
+        default:
+          this.loginErrMessage = err.code;
       };
     });
   }
