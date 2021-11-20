@@ -1,32 +1,24 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Wyvern Game - Login
+      Wyvern Game - Login 
     </ion-title>
+    <ion-buttons slot="end">
+      <div *ngIf="user$ | async as user">
+      <ion-button (click)="logOut()">{{user.email}} : Log Out</ion-button>
+      </div>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
-
 <ion-content>
   <div class='outerDiv' [class]="initialised?'visible':'invisible'">
   <div *ngIf="user$ | async as user; else elseBlock">
     <ion-grid>
     <ion-row>
-      <ion-col size="5"></ion-col>
-      <ion-col size="2">
-       {{user.email}}
-      </ion-col>
-      <ion-col size="5"></ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col size="5"></ion-col>
-      <ion-col size="2">
-        <ion-button (click)="logOut()" expand="block" color="primary">Log Out</ion-button>
-      </ion-col>
-      <ion-col size="5"></ion-col>
+    <br/>
     </ion-row>
   </ion-grid>
   </div>
-
   <ng-template #elseBlock>
   <ion-grid>
     <ion-row>

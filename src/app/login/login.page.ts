@@ -99,4 +99,8 @@ export class LoginPage implements OnDestroy {
     });
   }
 
+  proceed(){
+    
+  }
+
 }
