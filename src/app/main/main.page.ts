@@ -22,6 +22,9 @@ export class MainPage implements OnDestroy {
     });
   }
 
+  newGame(){
+    
+  }
   
   ngOnDestroy(){
     this.userSubscription.unsubscribe();
