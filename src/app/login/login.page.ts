@@ -22,7 +22,7 @@ export class LoginPage implements OnDestroy {
     this.user$ = user(this.auth);
     this.userSubscription = this.user$.subscribe(data => {
       this.initialised = true;
-      if (data.email) {
+      if (data) {
         this.router.navigate(['main']);
       }
     });
