@@ -1,5 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
-import { Auth, createUserWithEmailAndPassword, sendPasswordResetEmail,signInWithEmailAndPassword, sendEmailVerification,signOut, user, User } from '@angular/fire/auth';
+import { Router } from '@angular/router';
+import { Auth, createUserWithEmailAndPassword, sendPasswordResetEmail,signInWithEmailAndPassword,signOut, user, User } from '@angular/fire/auth';
 import { FirebaseError } from '@firebase/util';
 import { Observable, Subscription } from 'rxjs';
 
@@ -17,11 +18,13 @@ export class LoginPage implements OnDestroy {
   public inputPassword: string;
   public initialised = false;
 
-  constructor(private auth: Auth) {
+  constructor(private auth: Auth, private router: Router) {
     this.user$ = user(this.auth);
     this.userSubscription = this.user$.subscribe(data => {
-      console.log(data);
       this.initialised = true;
+      if (data.email) {
+        this.router.navigate(['main']);
+      }
     });
   }
 
@@ -97,10 +100,6 @@ export class LoginPage implements OnDestroy {
           this.loginErrMessage = err.code;
       };
     });
-  }
-
-  proceed(){
-    
   }
 
 }
