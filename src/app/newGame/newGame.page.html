@@ -1,0 +1,189 @@
+<ion-header [translucent]="true" class="ion-no-border">
+  <ion-toolbar>
+    <ion-title>
+      Wyvern Game 
+    </ion-title>
+    <ion-buttons slot="end">
+      <div *ngIf="user$ | async as user">
+      <ion-button (click)="logOut()">{{user.email}} : Log Out</ion-button>
+      </div>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <br/>
+  <br/>
+  <br/>
+  <div class="divOuterLeft">
+      <div class="square squareVisited squareColumn0 squareRow0"></div>
+      <div (click)="squareClick(1, 0)" class="square squareUnvisited squareColumn1 squareRow0"></div>
+      <div (click)="squareClick(2, 0)" class="square squareUnvisited squareColumn2 squareRow0"></div>
+      <div (click)="squareClick(3, 0)" class="square squareUnvisited squareColumn3 squareRow0"></div>
+      <div (click)="squareClick(4, 0)" class="square squareUnvisited squareColumn4 squareRow0"></div>
+      <div (click)="squareClick(5, 0)" class="square squareUnvisited squareColumn5 squareRow0"></div>
+      <div (click)="squareClick(0, 1)" class="square squareUnvisited squareColumn0 squareRow1"></div>
+      <div (click)="squareClick(1, 1)" class="square squareUnvisited squareColumn1 squareRow1"></div>
+      <div (click)="squareClick(2, 1)" class="square squareUnvisited squareColumn2 squareRow1"></div>
+      <div (click)="squareClick(3, 1)" class="square squareUnvisited squareColumn3 squareRow1"></div>
+      <div (click)="squareClick(4, 1)" class="square squareUnvisited squareColumn4 squareRow1"></div>
+      <div (click)="squareClick(5, 1)" class="square squareUnvisited squareColumn5 squareRow1"></div>
+      <div (click)="squareClick(0, 2)" class="square squareUnvisited squareColumn0 squareRow2"></div>
+      <div (click)="squareClick(1, 2)" class="square squareUnvisited squareColumn1 squareRow2"></div>
+      <div (click)="squareClick(2, 2)" class="square squareUnvisited squareColumn2 squareRow2"></div>
+      <div (click)="squareClick(3, 2)" class="square squareUnvisited squareColumn3 squareRow2"></div>
+      <div (click)="squareClick(4, 2)" class="square squareUnvisited squareColumn4 squareRow2"></div>
+      <div (click)="squareClick(5, 2)" class="square squareUnvisited squareColumn5 squareRow2"></div>
+      <div (click)="squareClick(0, 3)" class="square squareUnvisited squareColumn0 squareRow3"></div>
+      <div (click)="squareClick(1, 3)" class="square squareUnvisited squareColumn1 squareRow3"></div>
+      <div (click)="squareClick(2, 3)" class="square squareUnvisited squareColumn2 squareRow3"></div>
+      <div (click)="squareClick(3, 3)" class="square squareUnvisited squareColumn3 squareRow3"></div>
+      <div (click)="squareClick(4, 3)" class="square squareUnvisited squareColumn4 squareRow3"></div>
+      <div (click)="squareClick(5, 3)" class="square squareUnvisited squareColumn5 squareRow3"></div>
+      <div (click)="squareClick(0, 4)" class="square squareUnvisited squareColumn0 squareRow4"></div>
+      <div (click)="squareClick(1, 4)" class="square squareUnvisited squareColumn1 squareRow4"></div>
+      <div (click)="squareClick(2, 4)" class="square squareUnvisited squareColumn2 squareRow4"></div>
+      <div (click)="squareClick(3, 4)" class="square squareUnvisited squareColumn3 squareRow4"></div>
+      <div (click)="squareClick(4, 4)" class="square squareUnvisited squareColumn4 squareRow4"></div>
+      <div (click)="squareClick(5, 4)" class="square squareUnvisited squareColumn5 squareRow4"></div>
+      <div (click)="squareClick(0, 5)" class="square squareUnvisited squareColumn0 squareRow5"></div>
+      <div (click)="squareClick(1, 5)" class="square squareUnvisited squareColumn1 squareRow5"></div>
+      <div (click)="squareClick(2, 5)" class="square squareUnvisited squareColumn2 squareRow5"></div>
+      <div (click)="squareClick(3, 5)" class="square squareUnvisited squareColumn3 squareRow5"></div>
+      <div (click)="squareClick(4, 5)" class="square squareUnvisited squareColumn4 squareRow5"></div>
+      <div (click)="squareClick(5, 5)" class="square squareUnvisited squareColumn5 squareRow5"></div>
+      <div (click)="edgeClick(Orientation.Vertical, 1, 0)" class="edge edgeVertical edgeColumn1 edgeRow0" [ngClass]="gameModel.verticalEdges[1][0]"></div>
+      <div (click)="edgeClick(Orientation.Vertical, 2, 0)" class="edge edgeVertical edgeColumn2 edgeRow0" [ngClass]="gameModel.verticalEdges[2][0]"></div>
+      <div (click)="edgeClick(Orientation.Vertical, 3, 0)" class="edge edgeVertical edgeColumn3 edgeRow0" [ngClass]="gameModel.verticalEdges[3][0]"></div>
+      <div (click)="edgeClick(Orientation.Vertical, 4, 0)" class="edge edgeVertical edgeColumn4 edgeRow0" [ngClass]="gameModel.verticalEdges[4][0]"></div>
+      <div (click)="edgeClick(Orientation.Vertical, 5, 0)" class="edge edgeVertical edgeColumn5 edgeRow0" [ngClass]="gameModel.verticalEdges[5][0]"></div>
+      <div (click)="edgeClick(Orientation.Vertical, 1, 1)" class="edge edgeVertical edgeColumn1 edgeRow1" [ngClass]="gameModel.verticalEdges[1][1]"></div>
+      <div (click)="edgeClick(Orientation.Vertical, 2, 1)" class="edge edgeVertical edgeColumn2 edgeRow1" [ngClass]="gameModel.verticalEdges[2][1]"></div>
+      <div (click)="edgeClick(Orientation.Vertical, 3, 1)" class="edge edgeVertical edgeColumn3 edgeRow1" [ngClass]="gameModel.verticalEdges[3][1]"></div>
+      <div (click)="edgeClick(Orientation.Vertical, 4, 1)" class="edge edgeVertical edgeColumn4 edgeRow1" [ngClass]="gameModel.verticalEdges[4][1]"></div>
+      <div (click)="edgeClick(Orientation.Vertical, 5, 1)" class="edge edgeVertical edgeColumn5 edgeRow1" [ngClass]="gameModel.verticalEdges[5][1]"></div>
+      <div (click)="edgeClick(Orientation.Vertical, 1, 2)" class="edge edgeVertical edgeColumn1 edgeRow2" [ngClass]="gameModel.verticalEdges[1][2]"></div>
+      <div (click)="edgeClick(Orientation.Vertical, 2, 2)" class="edge edgeVertical edgeColumn2 edgeRow2" [ngClass]="gameModel.verticalEdges[2][2]"></div>
+      <div (click)="edgeClick(Orientation.Vertical, 3, 2)" class="edge edgeVertical edgeColumn3 edgeRow2" [ngClass]="gameModel.verticalEdges[3][2]"></div>
+      <div (click)="edgeClick(Orientation.Vertical, 4, 2)" class="edge edgeVertical edgeColumn4 edgeRow2" [ngClass]="gameModel.verticalEdges[4][2]"></div>
+      <div (click)="edgeClick(Orientation.Vertical, 5, 2)" class="edge edgeVertical edgeColumn5 edgeRow2" [ngClass]="gameModel.verticalEdges[5][2]"></div>
+      <div (click)="edgeClick(Orientation.Vertical, 1, 3)" class="edge edgeVertical edgeColumn1 edgeRow3" [ngClass]="gameModel.verticalEdges[1][3]"></div>
+      <div (click)="edgeClick(Orientation.Vertical, 2, 3)" class="edge edgeVertical edgeColumn2 edgeRow3" [ngClass]="gameModel.verticalEdges[2][3]"></div>
+      <div (click)="edgeClick(Orientation.Vertical, 3, 3)" class="edge edgeVertical edgeColumn3 edgeRow3" [ngClass]="gameModel.verticalEdges[3][3]"></div>
+      <div (click)="edgeClick(Orientation.Vertical, 4, 3)" class="edge edgeVertical edgeColumn4 edgeRow3" [ngClass]="gameModel.verticalEdges[4][3]"></div>
+      <div (click)="edgeClick(Orientation.Vertical, 5, 3)" class="edge edgeVertical edgeColumn5 edgeRow3" [ngClass]="gameModel.verticalEdges[5][3]"></div>
+      <div (click)="edgeClick(Orientation.Vertical, 1, 4)" class="edge edgeVertical edgeColumn1 edgeRow4" [ngClass]="gameModel.verticalEdges[1][4]"></div>
+      <div (click)="edgeClick(Orientation.Vertical, 2, 4)" class="edge edgeVertical edgeColumn2 edgeRow4" [ngClass]="gameModel.verticalEdges[2][4]"></div>
+      <div (click)="edgeClick(Orientation.Vertical, 3, 4)" class="edge edgeVertical edgeColumn3 edgeRow4" [ngClass]="gameModel.verticalEdges[3][4]"></div>
+      <div (click)="edgeClick(Orientation.Vertical, 4, 4)" class="edge edgeVertical edgeColumn4 edgeRow4" [ngClass]="gameModel.verticalEdges[4][4]"></div>
+      <div (click)="edgeClick(Orientation.Vertical, 5, 4)" class="edge edgeVertical edgeColumn5 edgeRow4" [ngClass]="gameModel.verticalEdges[5][4]"></div>
+      <div (click)="edgeClick(Orientation.Vertical, 1, 5)" class="edge edgeVertical edgeColumn1 edgeRow5" [ngClass]="gameModel.verticalEdges[1][5]"></div>
+      <div (click)="edgeClick(Orientation.Vertical, 2, 5)" class="edge edgeVertical edgeColumn2 edgeRow5" [ngClass]="gameModel.verticalEdges[2][5]"></div>
+      <div (click)="edgeClick(Orientation.Vertical, 3, 5)" class="edge edgeVertical edgeColumn3 edgeRow5" [ngClass]="gameModel.verticalEdges[3][5]"></div>
+      <div (click)="edgeClick(Orientation.Vertical, 4, 5)" class="edge edgeVertical edgeColumn4 edgeRow5" [ngClass]="gameModel.verticalEdges[4][5]"></div>
+      <div (click)="edgeClick(Orientation.Vertical, 5, 5)" class="edge edgeVertical edgeColumn5 edgeRow5" [ngClass]="gameModel.verticalEdges[5][5]"></div>
+      <div (click)="edgeClick(Orientation.Horizontal, 0, 1)" class="edge edgeHorizontal edgeColumn0 edgeRow1" [ngClass]="gameModel.horizontalEdges[0][1]"></div>
+      <div (click)="edgeClick(Orientation.Horizontal, 1, 1)" class="edge edgeHorizontal edgeColumn1 edgeRow1" [ngClass]="gameModel.horizontalEdges[1][1]"></div>
+      <div (click)="edgeClick(Orientation.Horizontal, 2, 1)" class="edge edgeHorizontal edgeColumn2 edgeRow1" [ngClass]="gameModel.horizontalEdges[2][1]"></div>
+      <div (click)="edgeClick(Orientation.Horizontal, 3, 1)" class="edge edgeHorizontal edgeColumn3 edgeRow1" [ngClass]="gameModel.horizontalEdges[3][1]"></div>
+      <div (click)="edgeClick(Orientation.Horizontal, 4, 1)" class="edge edgeHorizontal edgeColumn4 edgeRow1" [ngClass]="gameModel.horizontalEdges[4][1]"></div>
+      <div (click)="edgeClick(Orientation.Horizontal, 5, 1)" class="edge edgeHorizontal edgeColumn5 edgeRow1" [ngClass]="gameModel.horizontalEdges[5][1]"></div>
+      <div (click)="edgeClick(Orientation.Horizontal, 0, 2)" class="edge edgeHorizontal edgeColumn0 edgeRow2" [ngClass]="gameModel.horizontalEdges[0][2]"></div>
+      <div (click)="edgeClick(Orientation.Horizontal, 1, 2)" class="edge edgeHorizontal edgeColumn1 edgeRow2" [ngClass]="gameModel.horizontalEdges[1][2]"></div>
+      <div (click)="edgeClick(Orientation.Horizontal, 2, 2)" class="edge edgeHorizontal edgeColumn2 edgeRow2" [ngClass]="gameModel.horizontalEdges[2][2]"></div>
+      <div (click)="edgeClick(Orientation.Horizontal, 3, 2)" class="edge edgeHorizontal edgeColumn3 edgeRow2" [ngClass]="gameModel.horizontalEdges[3][2]"></div>
+      <div (click)="edgeClick(Orientation.Horizontal, 4, 2)" class="edge edgeHorizontal edgeColumn4 edgeRow2" [ngClass]="gameModel.horizontalEdges[4][2]"></div>
+      <div (click)="edgeClick(Orientation.Horizontal, 5, 2)" class="edge edgeHorizontal edgeColumn5 edgeRow2" [ngClass]="gameModel.horizontalEdges[5][2]"></div>
+      <div (click)="edgeClick(Orientation.Horizontal, 0, 3)" class="edge edgeHorizontal edgeColumn0 edgeRow3" [ngClass]="gameModel.horizontalEdges[0][3]"></div>
+      <div (click)="edgeClick(Orientation.Horizontal, 1, 3)" class="edge edgeHorizontal edgeColumn1 edgeRow3" [ngClass]="gameModel.horizontalEdges[1][3]"></div>
+      <div (click)="edgeClick(Orientation.Horizontal, 2, 3)" class="edge edgeHorizontal edgeColumn2 edgeRow3" [ngClass]="gameModel.horizontalEdges[2][3]"></div>
+      <div (click)="edgeClick(Orientation.Horizontal, 3, 3)" class="edge edgeHorizontal edgeColumn3 edgeRow3" [ngClass]="gameModel.horizontalEdges[3][3]"></div>
+      <div (click)="edgeClick(Orientation.Horizontal, 4, 3)" class="edge edgeHorizontal edgeColumn4 edgeRow3" [ngClass]="gameModel.horizontalEdges[4][3]"></div>
+      <div (click)="edgeClick(Orientation.Horizontal, 5, 3)" class="edge edgeHorizontal edgeColumn5 edgeRow3" [ngClass]="gameModel.horizontalEdges[5][3]"></div>
+      <div (click)="edgeClick(Orientation.Horizontal, 0, 4)" class="edge edgeHorizontal edgeColumn0 edgeRow4" [ngClass]="gameModel.horizontalEdges[0][4]"></div>
+      <div (click)="edgeClick(Orientation.Horizontal, 1, 4)" class="edge edgeHorizontal edgeColumn1 edgeRow4" [ngClass]="gameModel.horizontalEdges[1][4]"></div>
+      <div (click)="edgeClick(Orientation.Horizontal, 2, 4)" class="edge edgeHorizontal edgeColumn2 edgeRow4" [ngClass]="gameModel.horizontalEdges[2][4]"></div>
+      <div (click)="edgeClick(Orientation.Horizontal, 3, 4)" class="edge edgeHorizontal edgeColumn3 edgeRow4" [ngClass]="gameModel.horizontalEdges[3][4]"></div>
+      <div (click)="edgeClick(Orientation.Horizontal, 4, 4)" class="edge edgeHorizontal edgeColumn4 edgeRow4" [ngClass]="gameModel.horizontalEdges[4][4]"></div>
+      <div (click)="edgeClick(Orientation.Horizontal, 5, 4)" class="edge edgeHorizontal edgeColumn5 edgeRow4" [ngClass]="gameModel.horizontalEdges[5][4]"></div>
+      <div (click)="edgeClick(Orientation.Horizontal, 0, 5)" class="edge edgeHorizontal edgeColumn0 edgeRow5" [ngClass]="gameModel.horizontalEdges[0][5]"></div>
+      <div (click)="edgeClick(Orientation.Horizontal, 1, 5)" class="edge edgeHorizontal edgeColumn1 edgeRow5" [ngClass]="gameModel.horizontalEdges[1][5]"></div>
+      <div (click)="edgeClick(Orientation.Horizontal, 2, 5)" class="edge edgeHorizontal edgeColumn2 edgeRow5" [ngClass]="gameModel.horizontalEdges[2][5]"></div>
+      <div (click)="edgeClick(Orientation.Horizontal, 3, 5)" class="edge edgeHorizontal edgeColumn3 edgeRow5" [ngClass]="gameModel.horizontalEdges[3][5]"></div>
+      <div (click)="edgeClick(Orientation.Horizontal, 4, 5)" class="edge edgeHorizontal edgeColumn4 edgeRow5" [ngClass]="gameModel.horizontalEdges[4][5]"></div>
+      <div (click)="edgeClick(Orientation.Horizontal, 5, 5)" class="edge edgeHorizontal edgeColumn5 edgeRow5" [ngClass]="gameModel.horizontalEdges[5][5]"></div>
+      <div class="edge edgeBorderHorizontal edgeColumn0 edgeRow0" [ngClass]="gameModel.horizontalEdges[0][0]"></div>
+      <div class="edge edgeBorderHorizontal edgeColumn1 edgeRow0" [ngClass]="gameModel.horizontalEdges[1][0]"></div>
+      <div class="edge edgeBorderHorizontal edgeColumn2 edgeRow0" [ngClass]="gameModel.horizontalEdges[2][0]"></div>
+      <div class="edge edgeBorderHorizontal edgeColumn3 edgeRow0" [ngClass]="gameModel.horizontalEdges[3][0]"></div>
+      <div class="edge edgeBorderHorizontal edgeColumn4 edgeRow0" [ngClass]="gameModel.horizontalEdges[4][0]"></div>
+      <div class="edge edgeBorderHorizontal edgeColumn5 edgeRow0" [ngClass]="gameModel.horizontalEdges[5][0]"></div>
+      <div class="edge edgeBorderHorizontal edgeColumn0 edgeRow6" [ngClass]="gameModel.horizontalEdges[0][6]"></div>
+      <div class="edge edgeBorderHorizontal edgeColumn1 edgeRow6" [ngClass]="gameModel.horizontalEdges[1][6]"></div>
+      <div class="edge edgeBorderHorizontal edgeColumn2 edgeRow6" [ngClass]="gameModel.horizontalEdges[2][6]"></div>
+      <div class="edge edgeBorderHorizontal edgeColumn3 edgeRow6" [ngClass]="gameModel.horizontalEdges[3][6]"></div>
+      <div class="edge edgeBorderHorizontal edgeColumn4 edgeRow6" [ngClass]="gameModel.horizontalEdges[4][6]"></div>
+      <div class="edge edgeBorderHorizontal edgeColumn5 edgeRow6" [ngClass]="gameModel.horizontalEdges[5][6]"></div>
+      <div class="edge edgeBorderVertical edgeColumn0 edgeRow0" [ngClass]="gameModel.verticalEdges[0][0]"></div>
+      <div class="edge edgeBorderVertical edgeColumn6 edgeRow0" [ngClass]="gameModel.verticalEdges[6][0]"></div>
+      <div class="edge edgeBorderVertical edgeColumn0 edgeRow1" [ngClass]="gameModel.verticalEdges[0][1]"></div>
+      <div class="edge edgeBorderVertical edgeColumn6 edgeRow1" [ngClass]="gameModel.verticalEdges[6][1]"></div>
+      <div class="edge edgeBorderVertical edgeColumn0 edgeRow2" [ngClass]="gameModel.verticalEdges[0][2]"></div>
+      <div class="edge edgeBorderVertical edgeColumn6 edgeRow2" [ngClass]="gameModel.verticalEdges[6][2]"></div>
+      <div class="edge edgeBorderVertical edgeColumn0 edgeRow3" [ngClass]="gameModel.verticalEdges[0][3]"></div>
+      <div class="edge edgeBorderVertical edgeColumn6 edgeRow3" [ngClass]="gameModel.verticalEdges[6][3]"></div>
+      <div class="edge edgeBorderVertical edgeColumn0 edgeRow4" [ngClass]="gameModel.verticalEdges[0][4]"></div>
+      <div class="edge edgeBorderVertical edgeColumn6 edgeRow4" [ngClass]="gameModel.verticalEdges[6][4]"></div>
+      <div class="edge edgeBorderVertical edgeColumn0 edgeRow5" [ngClass]="gameModel.verticalEdges[0][5]"></div>
+      <div class="edge edgeBorderVertical edgeColumn6 edgeRow5" [ngClass]="gameModel.verticalEdges[6][5]"></div>
+  
+      <div class="corner edgeColumn1 edgeRow1" [ngClass]="getCornerState(1,1)"></div>
+      <div class="corner edgeColumn2 edgeRow1" [ngClass]="getCornerState(2,1)"></div>
+      <div class="corner edgeColumn3 edgeRow1" [ngClass]="getCornerState(3,1)"></div>
+      <div class="corner edgeColumn4 edgeRow1" [ngClass]="getCornerState(4,1)"></div>
+      <div class="corner edgeColumn5 edgeRow1" [ngClass]="getCornerState(5,1)"></div>
+  
+      <div class="corner edgeColumn1 edgeRow2" [ngClass]="getCornerState(1,2)"></div>
+      <div class="corner edgeColumn2 edgeRow2" [ngClass]="getCornerState(2,2)"></div>
+      <div class="corner edgeColumn3 edgeRow2" [ngClass]="getCornerState(3,2)"></div>
+      <div class="corner edgeColumn4 edgeRow2" [ngClass]="getCornerState(4,2)"></div>
+      <div class="corner edgeColumn5 edgeRow2" [ngClass]="getCornerState(5,2)"></div>
+  
+      <div class="corner edgeColumn1 edgeRow3" [ngClass]="getCornerState(1,3)"></div>
+      <div class="corner edgeColumn2 edgeRow3" [ngClass]="getCornerState(2,3)"></div>
+      <div class="corner edgeColumn3 edgeRow3" [ngClass]="getCornerState(3,3)"></div>
+      <div class="corner edgeColumn4 edgeRow3" [ngClass]="getCornerState(4,3)"></div>
+      <div class="corner edgeColumn5 edgeRow3" [ngClass]="getCornerState(5,3)"></div>
+  
+      <div class="corner edgeColumn1 edgeRow4" [ngClass]="getCornerState(1,4)"></div>
+      <div class="corner edgeColumn2 edgeRow4" [ngClass]="getCornerState(2,4)"></div>
+      <div class="corner edgeColumn3 edgeRow4" [ngClass]="getCornerState(3,4)"></div>
+      <div class="corner edgeColumn4 edgeRow4" [ngClass]="getCornerState(4,4)"></div>
+      <div class="corner edgeColumn5 edgeRow4" [ngClass]="getCornerState(5,4)"></div>
+  
+      <div class="corner edgeColumn1 edgeRow5" [ngClass]="getCornerState(1,5)"></div>
+      <div class="corner edgeColumn2 edgeRow5" [ngClass]="getCornerState(2,5)"></div>
+      <div class="corner edgeColumn3 edgeRow5" [ngClass]="getCornerState(3,5)"></div>
+      <div class="corner edgeColumn4 edgeRow5" [ngClass]="getCornerState(4,5)"></div>
+      <div class="corner edgeColumn5 edgeRow5" [ngClass]="getCornerState(5,5)"></div>
+  
+      <div class="marker" [ngClass]="'pieceColumn' + gameModel.marker.horizontal + ' pieceRow' + gameModel.marker.vertical"></div>
+      <div class="target" [ngClass]="'pieceColumn' + gameModel.target.horizontal + ' pieceRow' + gameModel.target.vertical"></div>
+  </div>
+  <div class="divOuterRight">
+      <div class="rightTextArea">
+          Create your gameboard by clicking on the edges of squares to make walls. 
+          You will want to make the path from the red starting point to the blue target as difficult for your opponent as possible.
+          Click within a square to move the blue target. 
+          You can choose to continue at any time as long as there is a way to navigate from the starting point to the target. 
+          <br/>
+          <br/>
+          <br/>
+          <div *ngIf="gameModel.validRouteExists"> 
+              <ion-button (click)="buttonPress()">Continue</ion-button>
+          </div>
+          <div *ngIf="!gameModel.validRouteExists" class="warning"> 
+              A route to the target is required.
+          </div>
+      </div>
+  </div>
+</ion-content>

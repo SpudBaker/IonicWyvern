@@ -23,7 +23,7 @@ export class MainPage implements OnDestroy {
   }
 
   newGame(){
-    
+    this.router.navigate(['newGame']);
   }
   
   ngOnDestroy(){

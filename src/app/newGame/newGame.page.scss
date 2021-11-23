@@ -1,0 +1,200 @@
+.divOuterLeft{
+  position: absolute;
+  top:75px;
+  left:5%;
+  width: 40%;
+  padding-bottom: 40%; /* = width for a square aspect ratio */
+}
+.divOuterRight{
+  position: absolute;
+  top:75px;
+  left:55%;
+  width: 40%;
+  padding-bottom: 40%; /* = width for a square aspect ratio */
+}
+.square{
+  position: absolute;
+  width: 15%;
+  padding-bottom: 15%; /* = width for a square aspect ratio */
+}
+.squareUnvisited {
+  background-color: rgba(216, 98, 20, 0.178);
+}
+.squareVisited {
+  background-color: lightgrey;
+}
+.squareColumn0{
+  left: 5%;
+}
+.squareColumn1{
+  left: 20%;
+}
+.squareColumn2{
+  left: 35%;
+}
+.squareColumn3{
+  left: 50%;
+}
+.squareColumn4{
+  left: 65%;
+}
+.squareColumn5{
+  left: 80%;
+}
+.squareRow0{
+  top:5%;
+}
+.squareRow1{
+  top:20%;
+}
+.squareRow2{
+  top:35%;
+}
+.squareRow3{
+  top:50%;
+}
+.squareRow4{
+  top:65%;
+}
+.squareRow5{
+  top:80%;
+}
+.edge{
+  position: absolute;
+}
+.edgeBorderHorizontal{
+  width: 17%;
+  padding-bottom: 2%; /* = width for a square aspect ratio */
+}
+.edgeBorderVertical{
+  width: 2%;
+  padding-bottom: 17%; /* = width for a square aspect ratio */
+}
+.edgeBorder{
+  background-color: black;
+}
+.edgeOpening{
+  background-color:beige;
+}
+.edgeUnknown{
+  background-color: beige;
+}
+.edgeWall{
+  background-color: black;
+}
+.edgeHorizontal{
+  width: 15%;
+  padding-bottom: 2%; /* = width for a square aspect ratio */
+}
+.edgeVertical{
+  width: 2%;
+  padding-bottom: 15%; /* = width for a square aspect ratio */
+}
+.edgeColumn0{
+  left: 5%;
+}
+.edgeColumn1{
+  left: 20%;
+}
+.edgeColumn2{
+  left: 35%;
+}
+.edgeColumn3{
+  left: 50%;
+}
+.edgeColumn4{
+  left: 65%;
+}
+.edgeColumn5{
+  left: 80%;
+}
+.edgeColumn6{
+  left: 95%;
+}
+.edgeRow0{
+  top:5%;
+}
+.edgeRow1{
+  top:20%;
+}
+.edgeRow2{
+  top:35%;
+}
+.edgeRow3{
+  top:50%;
+}
+.edgeRow4{
+  top:65%;
+}
+.edgeRow5{
+  top:80%;
+}
+.edgeRow6{
+  top:95%;
+}
+.corner{
+  position: absolute;
+  height: 2%;
+  width: 2%;
+}
+.marker {
+  position: absolute;
+  height: 9%;
+  width: 9%;
+  background-color: red;
+  border-radius: 50%;
+}
+.pieceColumn0{
+  left: 9%;
+}
+.pieceColumn1{
+  left: 24%;
+}
+.pieceColumn2{
+  left: 39%;
+}
+.pieceColumn3{
+  left: 54%;
+}
+.pieceColumn4{
+  left: 69%;
+}
+.pieceColumn5{
+  left: 84%;
+}
+.pieceRow0{
+  top:9%;
+}
+.pieceRow1{
+  top:24%;
+}
+.pieceRow2{
+  top:39%;
+}
+.pieceRow3{
+  top:54%;
+}
+.pieceRow4{
+  top:69%;
+}
+.pieceRow5{
+  top:84%;
+}
+.rightTextArea{
+  font-size:large;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight:normal;
+  position: absolute;
+  top: 5%;
+  left: 5%;
+}
+.target {
+  position: absolute;
+  height: 9%;
+  width: 9%;
+  background-color: blue;
+  border-radius: 50%;
+}
+.warning {
+  color: red;
+}
