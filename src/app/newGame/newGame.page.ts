@@ -2,7 +2,9 @@ import { Component, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Auth, signOut, user, User } from '@angular/fire/auth';
 import { Observable, Subscription } from 'rxjs';
+import { take } from 'rxjs/operators';
 import * as Globals from '../../globals';
+import { addDoc, collection, doc, DocumentData, DocumentReference, Firestore, getDocs, getFirestore, query, runTransaction, where  } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-newGame',
@@ -17,7 +19,7 @@ export class NewGamePage implements OnDestroy {
   public gameModel = new Globals.GameModel();
   public Orientation = Globals.Orientation;
 
-  constructor(private auth: Auth, private router: Router) {
+  constructor(private afs: Firestore, private auth: Auth, private router: Router) {
     this.user$ = user(this.auth);
     this.userSubscription = this.user$.subscribe(data => {
       if (data == null) {
@@ -168,8 +170,38 @@ export class NewGamePage implements OnDestroy {
     return false;
   }
 
-  buttonPress() {
-    alert("asdfghj");
+  async continue() {
+    const gamesCollection = collection(getFirestore(), "games");
+    let matchedDoc: DocumentReference;
+    let matchedUserEmail: string;
+    const user = await this.user$.pipe(take(1)).toPromise();
+    const q = query(collection(getFirestore(), "games"), where("gameState", "==", Globals.GameState.WAITING_FOR_PLAYERS));
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach(doc => {
+      if (doc.get('player1') != user.email){
+        matchedDoc = doc.ref;
+        matchedUserEmail = doc.get('player1');
+      }
+    });
+    if (!matchedDoc){
+      alert('adding new doc');
+      addDoc( gamesCollection, {
+        player1: user.email,
+        player1Board: JSON.stringify(this.gameModel),
+        gameState: Globals.GameState.WAITING_FOR_PLAYERS
+        }
+      ).catch(err => alert(err));
+    } else {
+      await runTransaction(getFirestore(), async (transaction) => {
+        const sfDoc = await transaction.get(matchedDoc);
+        if (!sfDoc.exists()) {
+          alert("Document does not exist!");
+        }
+        transaction.update(matchedDoc, { player2: user.email });
+        transaction.update(matchedDoc, { player2Board: JSON.stringify(this.gameModel)});
+        transaction.update(matchedDoc, { gameState: Globals.GameState.IN_PROGRES });
+      alert('game : ' + sfDoc.id +  ' -----  player1 = ' + matchedUserEmail);
+      }).catch(err => alert(err));
+    }
   }
-
 }
