@@ -196,12 +196,22 @@ export class NewGamePage implements OnDestroy {
         const sfDoc = await transaction.get(matchedDoc);
         if (!sfDoc.exists()) {
           alert("Document does not exist!");
-        }
-        transaction.update(matchedDoc, { player2: user.email });
-        transaction.update(matchedDoc, { player2Board: JSON.stringify(this.gameModel)});
-        transaction.update(matchedDoc, { gameState: Globals.GameState.IN_PROGRES });
-      alert('game : ' + sfDoc.id +  ' -----  player1 = ' + matchedUserEmail);
-      }).catch(err => alert(err));
+        } else {
+          if (sfDoc.get('gameState')===Globals.GameState.WAITING_FOR_PLAYERS) {
+            transaction.update(matchedDoc, { player2: user.email });
+            transaction.update(matchedDoc, { player2Board: JSON.stringify(this.gameModel)});
+            transaction.update(matchedDoc, { gameState: Globals.GameState.IN_PROGRES });
+            alert('game : ' + sfDoc.id +  ' -----  player1 = ' + matchedUserEmail);
+          } else {
+            alert("Status of document has changed - new game created");
+            addDoc( gamesCollection, {
+              player1: user.email,
+              player1Board: JSON.stringify(this.gameModel),
+              gameState: Globals.GameState.WAITING_FOR_PLAYERS
+              }
+            ).catch(err => alert(err));
+        }}
+        }).catch(err => alert(err));
     }
   }
 }
