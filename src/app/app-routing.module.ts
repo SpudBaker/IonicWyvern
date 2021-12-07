@@ -15,6 +15,10 @@ const routes: Routes = [
     loadChildren: () => import('./newGame/newGame.module').then( m => m.NewGamePageModule)
   },
   {
+    path: 'playGame',
+    loadChildren: () => import('./playGame/playGame.module').then( m => m.PlayGamePageModule)
+  },
+  {
     path: '',
     redirectTo: 'login',
     pathMatch: 'full'

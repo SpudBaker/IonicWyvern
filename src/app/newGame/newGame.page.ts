@@ -4,7 +4,7 @@ import { Auth, signOut, user, User } from '@angular/fire/auth';
 import { Observable, Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
 import * as Globals from '../../globals';
-import { addDoc, collection, doc, DocumentData, DocumentReference, Firestore, getDocs, getFirestore, query, runTransaction, where  } from '@angular/fire/firestore';
+import { addDoc, collection, DocumentReference, Firestore, getDocs, getFirestore, query, runTransaction, where  } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-newGame',
@@ -190,7 +190,9 @@ export class NewGamePage implements OnDestroy {
         player1Board: JSON.stringify(this.gameModel),
         gameState: Globals.GameState.WAITING_FOR_PLAYERS
         }
-      ).catch(err => alert(err));
+      )
+      .then(() => this.router.navigate(['playGame']))
+      .catch(err => alert(err))
     } else {
       await runTransaction(getFirestore(), async (transaction) => {
         const sfDoc = await transaction.get(matchedDoc);
@@ -198,10 +200,15 @@ export class NewGamePage implements OnDestroy {
           alert("Document does not exist!");
         } else {
           if (sfDoc.get('gameState')===Globals.GameState.WAITING_FOR_PLAYERS) {
-            transaction.update(matchedDoc, { player2: user.email });
-            transaction.update(matchedDoc, { player2Board: JSON.stringify(this.gameModel)});
-            transaction.update(matchedDoc, { gameState: Globals.GameState.IN_PROGRES });
-            alert('game : ' + sfDoc.id +  ' -----  player1 = ' + matchedUserEmail);
+            try{
+              alert('game : ' + sfDoc.id +  ' -----  player1 = ' + matchedUserEmail);
+              transaction.update(matchedDoc, { player2: user.email });
+              transaction.update(matchedDoc, { player2Board: JSON.stringify(this.gameModel)});
+              transaction.update(matchedDoc, { gameState: Globals.GameState.IN_PROGRES });
+              this.router.navigate(['playGame']);
+            }catch(err) {
+              alert(err);
+            }
           } else {
             alert("Status of document has changed - new game created");
             addDoc( gamesCollection, {
@@ -209,9 +216,12 @@ export class NewGamePage implements OnDestroy {
               player1Board: JSON.stringify(this.gameModel),
               gameState: Globals.GameState.WAITING_FOR_PLAYERS
               }
-            ).catch(err => alert(err));
-        }}
-        }).catch(err => alert(err));
+            )
+            .then(() => this.router.navigate(['playGame']))
+            .catch(err => alert(err))
+          }
+        }
+      }).catch(err => alert(err));
     }
   }
 }
