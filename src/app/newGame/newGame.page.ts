@@ -1,8 +1,7 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Auth, signOut, user, User } from '@angular/fire/auth';
-import { Observable, Subscription } from 'rxjs';
-import { take } from 'rxjs/operators';
+import { Auth, signOut, user } from '@angular/fire/auth';
+import { first } from 'rxjs/operators';
 import * as Globals from '../../globals';
 import { addDoc, collection, DocumentReference, Firestore, getDocs, getFirestore, query, runTransaction, where  } from '@angular/fire/firestore';
 
@@ -11,25 +10,18 @@ import { addDoc, collection, DocumentReference, Firestore, getDocs, getFirestore
   templateUrl: 'newGame.page.html',
   styleUrls: ['newGame.page.scss'],
 })
-export class NewGamePage implements OnDestroy {
+export class NewGamePage {
 
-  public user$: Observable<User | null>;
-  private userSubscription: Subscription;
   public EdgeState = Globals.EdgeState;
   public gameModel = new Globals.GameModel();
   public Orientation = Globals.Orientation;
 
   constructor(private afs: Firestore, private auth: Auth, private router: Router) {
-    this.user$ = user(this.auth);
-    this.userSubscription = this.user$.subscribe(data => {
+    user(this.auth).pipe(first()).subscribe(data => {
       if (data == null) {
         this.router.navigate(['login']);
       }
     });
-  }
-  
-  ngOnDestroy(){
-    this.userSubscription.unsubscribe();
   }
 
   logOut(){
@@ -174,11 +166,11 @@ export class NewGamePage implements OnDestroy {
     const gamesCollection = collection(getFirestore(), "games");
     let matchedDoc: DocumentReference;
     let matchedUserEmail: string;
-    const user = await this.user$.pipe(take(1)).toPromise();
+    const u = await user(this.auth).pipe(first()).toPromise();
     const q = query(collection(getFirestore(), "games"), where("gameState", "==", Globals.GameState.WAITING_FOR_PLAYERS));
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach(doc => {
-      if (doc.get('player1') != user.email){
+      if (doc.get('player1') != u.email){
         matchedDoc = doc.ref;
         matchedUserEmail = doc.get('player1');
       }
@@ -186,7 +178,7 @@ export class NewGamePage implements OnDestroy {
     if (!matchedDoc){
       alert('adding new doc');
       addDoc( gamesCollection, {
-        player1: user.email,
+        player1: u.email,
         player1Board: JSON.stringify(this.gameModel),
         gameState: Globals.GameState.WAITING_FOR_PLAYERS
         }
@@ -202,7 +194,7 @@ export class NewGamePage implements OnDestroy {
           if (sfDoc.get('gameState')===Globals.GameState.WAITING_FOR_PLAYERS) {
             try{
               alert('game : ' + sfDoc.id +  ' -----  player1 = ' + matchedUserEmail);
-              transaction.update(matchedDoc, { player2: user.email });
+              transaction.update(matchedDoc, { player2: u.email });
               transaction.update(matchedDoc, { player2Board: JSON.stringify(this.gameModel)});
               transaction.update(matchedDoc, { gameState: Globals.GameState.IN_PROGRES });
               this.router.navigate(['playGame']);
@@ -212,7 +204,7 @@ export class NewGamePage implements OnDestroy {
           } else {
             alert("Status of document has changed - new game created");
             addDoc( gamesCollection, {
-              player1: user.email,
+              player1: u.email,
               player1Board: JSON.stringify(this.gameModel),
               gameState: Globals.GameState.WAITING_FOR_PLAYERS
               }
