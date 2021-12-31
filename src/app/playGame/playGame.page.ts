@@ -4,6 +4,7 @@ import { Observable, Subscription } from 'rxjs';
 import { first } from 'rxjs/operators';
 import { Auth, signOut, user, User } from '@angular/fire/auth';
 import { Firestore  } from '@angular/fire/firestore';
+import { WyvernService } from '../service/wyvern.service';
 
 
 @Component({
@@ -13,16 +14,11 @@ import { Firestore  } from '@angular/fire/firestore';
 })
 export class PlayGamePage {
 
-  constructor(private afs: Firestore, private auth: Auth, private router: Router) {
-    user(this.auth).pipe(first()).subscribe(data => {
-      if (data == null) {
-        this.router.navigate(['login']);
-      }
-    });
+  constructor(private afs: Firestore, private auth: Auth, private router: Router, private wyvernService: WyvernService) {
   }
 
   logOut(){
-    signOut(this.auth);
+    this.wyvernService.logOut();
   }
 
 }

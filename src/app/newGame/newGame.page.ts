@@ -3,7 +3,8 @@ import { Router } from '@angular/router';
 import { Auth, signOut, user } from '@angular/fire/auth';
 import { first } from 'rxjs/operators';
 import * as Globals from '../../globals';
-import { addDoc, collection, DocumentReference, Firestore, getDocs, getFirestore, query, runTransaction, where  } from '@angular/fire/firestore';
+import { addDoc, collection, DocumentReference, getDocs, getFirestore, query, runTransaction, where  } from '@angular/fire/firestore';
+import { WyvernService } from '../service/wyvern.service';
 
 @Component({
   selector: 'app-newGame',
@@ -16,16 +17,11 @@ export class NewGamePage {
   public gameModel = new Globals.GameModel();
   public Orientation = Globals.Orientation;
 
-  constructor(private afs: Firestore, private auth: Auth, private router: Router) {
-    user(this.auth).pipe(first()).subscribe(data => {
-      if (data == null) {
-        this.router.navigate(['login']);
-      }
-    });
+  constructor(private auth: Auth, private router: Router, private wyvernService: WyvernService) {
   }
 
   logOut(){
-    signOut(this.auth);
+    this.wyvernService.logOut();
   }
 
   edgeClick(orientation: Globals.Orientation, h:number, v: number){
