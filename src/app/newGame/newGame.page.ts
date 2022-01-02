@@ -1,9 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { Auth, signOut, user } from '@angular/fire/auth';
-import { first } from 'rxjs/operators';
 import * as Globals from '../../globals';
-import { addDoc, collection, DocumentReference, getDocs, getFirestore, query, runTransaction, where  } from '@angular/fire/firestore';
 import { WyvernService } from '../service/wyvern.service';
 
 @Component({
@@ -17,7 +13,7 @@ export class NewGamePage {
   public gameModel = new Globals.GameModel();
   public Orientation = Globals.Orientation;
 
-  constructor(private auth: Auth, private router: Router, private wyvernService: WyvernService) {
+  constructor(private wyvernService: WyvernService) {
   }
 
   logOut(){
@@ -159,57 +155,6 @@ export class NewGamePage {
   }
 
   async continue() {
-    const gamesCollection = collection(getFirestore(), "games");
-    let matchedDoc: DocumentReference;
-    let matchedUserEmail: string;
-    const u = await user(this.auth).pipe(first()).toPromise();
-    const q = query(collection(getFirestore(), "games"), where("gameState", "==", Globals.GameState.WAITING_FOR_PLAYERS));
-    const querySnapshot = await getDocs(q);
-    querySnapshot.forEach(doc => {
-      if (doc.get('player1') != u.email){
-        matchedDoc = doc.ref;
-        matchedUserEmail = doc.get('player1');
-      }
-    });
-    if (!matchedDoc){
-      alert('adding new doc');
-      addDoc( gamesCollection, {
-        player1: u.email,
-        player1Board: JSON.stringify(this.gameModel),
-        gameState: Globals.GameState.WAITING_FOR_PLAYERS
-        }
-      )
-      .then(() => this.router.navigate(['playGame']))
-      .catch(err => alert(err))
-    } else {
-      await runTransaction(getFirestore(), async (transaction) => {
-        const sfDoc = await transaction.get(matchedDoc);
-        if (!sfDoc.exists()) {
-          alert("Document does not exist!");
-        } else {
-          if (sfDoc.get('gameState')===Globals.GameState.WAITING_FOR_PLAYERS) {
-            try{
-              alert('game : ' + sfDoc.id +  ' -----  player1 = ' + matchedUserEmail);
-              transaction.update(matchedDoc, { player2: u.email });
-              transaction.update(matchedDoc, { player2Board: JSON.stringify(this.gameModel)});
-              transaction.update(matchedDoc, { gameState: Globals.GameState.IN_PROGRES });
-              this.router.navigate(['playGame']);
-            }catch(err) {
-              alert(err);
-            }
-          } else {
-            alert("Status of document has changed - new game created");
-            addDoc( gamesCollection, {
-              player1: u.email,
-              player1Board: JSON.stringify(this.gameModel),
-              gameState: Globals.GameState.WAITING_FOR_PLAYERS
-              }
-            )
-            .then(() => this.router.navigate(['playGame']))
-            .catch(err => alert(err))
-          }
-        }
-      }).catch(err => alert(err));
-    }
+    this.wyvernService.createNewGame(this.gameModel);
   }
 }
