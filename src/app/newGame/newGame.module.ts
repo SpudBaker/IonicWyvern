@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { NewGamePage } from './newGame.page';
-
+import { HeaderComponent } from '../components/header/header.component';
 import { newGamePageRoutingModule } from './newGame-routing.module';
 
 
@@ -14,6 +14,6 @@ import { newGamePageRoutingModule } from './newGame-routing.module';
     IonicModule,
     newGamePageRoutingModule
   ],
-  declarations: [NewGamePage]
+  declarations: [HeaderComponent, NewGamePage]
 })
 export class NewGamePageModule {}

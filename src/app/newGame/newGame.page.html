@@ -1,16 +1,5 @@
-<ion-header [translucent]="true" class="ion-no-border">
-  <ion-toolbar>
-    <ion-title>
-      Wyvern Game 
-    </ion-title>
-    <ion-buttons slot="end">
-      <div *ngIf="user$ | async as user">
-      <ion-button (click)="logOut()">{{user.email}} : Log Out</ion-button>
-      </div>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
 <ion-content>
+  <app-header></app-header>
   <br/>
   <br/>
   <br/>

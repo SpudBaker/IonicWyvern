@@ -1,9 +1,4 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { Observable, Subscription } from 'rxjs';
-import { first } from 'rxjs/operators';
-import { Auth, signOut, user, User } from '@angular/fire/auth';
-import { Firestore  } from '@angular/fire/firestore';
 import { WyvernService } from '../service/wyvern.service';
 
 
@@ -14,11 +9,7 @@ import { WyvernService } from '../service/wyvern.service';
 })
 export class PlayGamePage {
 
-  constructor(private afs: Firestore, private auth: Auth, private router: Router, private wyvernService: WyvernService) {
-  }
-
-  logOut(){
-    this.wyvernService.logOut();
+  constructor(private wyvernService: WyvernService) {
   }
 
 }

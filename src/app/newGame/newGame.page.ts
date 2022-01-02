@@ -16,10 +16,6 @@ export class NewGamePage {
   constructor(private wyvernService: WyvernService) {
   }
 
-  logOut(){
-    this.wyvernService.logOut();
-  }
-
   edgeClick(orientation: Globals.Orientation, h:number, v: number){
     switch (orientation){
       case this.Orientation.Horizontal: {

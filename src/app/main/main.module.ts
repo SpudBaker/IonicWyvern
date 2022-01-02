@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { MainPage } from './main.page';
-
+import { HeaderComponent } from '../components/header/header.component';
 import { MainPageRoutingModule } from './main-routing.module';
 
 
@@ -14,6 +14,6 @@ import { MainPageRoutingModule } from './main-routing.module';
     IonicModule,
     MainPageRoutingModule
   ],
-  declarations: [MainPage]
+  declarations: [MainPage, HeaderComponent]
 })
 export class MainPageModule {}
