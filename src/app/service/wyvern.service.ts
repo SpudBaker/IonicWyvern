@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import { addDoc, collection, DocumentReference, getDocs, getFirestore, query, runTransaction, where } from '@angular/fire/firestore';
 import { Auth, signOut, user } from '@angular/fire/auth';
 import { Router } from '@angular/router';
-import { first } from 'rxjs/operators';
+import { filter, first, map, switchMap } from 'rxjs/operators';
 import * as Globals from '../../globals';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,56 @@ export class WyvernService {
 
   logOut(){
     signOut(this.auth);
+  }
+
+  checkForActiveGameInProgress(): Observable<string[]>{
+    return user(this.auth).pipe(
+      first(),
+      filter(data => !((data == null) || (data.email == null))),
+      map(data => {
+        return data.email;
+      }),
+      switchMap(email => {
+        const q = query(collection(getFirestore(), "games"), 
+          where("gameState", "==", Globals.GameState.IN_PROGRESS),
+          where("player1","==", email));
+        return getDocs(q);
+      }),
+      map(querySnapShot => {
+        const arrString : string[] = [];
+        if (querySnapShot.size > 0) {
+         querySnapShot.forEach(item => {
+           arrString.push(item.id);
+         })
+        }
+        return arrString;
+      })
+    )
+  }
+
+  checkForActiveGamePending(): Observable<string[]>{
+    return user(this.auth).pipe(
+      first(),
+      filter(data => !((data == null) || (data.email == null))),
+      map(data => {
+        return data.email;
+      }),
+      switchMap(email => {
+        const q = query(collection(getFirestore(), "games"), 
+          where("gameState", "==", Globals.GameState.WAITING_FOR_PLAYERS),
+          where("player1","==", email));
+        return getDocs(q);
+      }),
+      map(querySnapShot => {
+        const arrString : string[] = [];
+        if (querySnapShot.size > 0) {
+         querySnapShot.forEach(item => {
+           arrString.push(item.id);
+         })
+        }
+        return arrString;
+      })
+    )
   }
 
   async createNewGame(gameModel: Globals.GameModel){
@@ -56,7 +107,7 @@ export class WyvernService {
               alert('game : ' + sfDoc.id +  ' -----  player1 = ' + matchedUserEmail);
               transaction.update(matchedDoc, { player2: u.email });
               transaction.update(matchedDoc, { player2Board: JSON.stringify(gameModel)});
-              transaction.update(matchedDoc, { gameState: Globals.GameState.IN_PROGRES });
+              transaction.update(matchedDoc, { gameState: Globals.GameState.IN_PROGRESS });
               this.router.navigate(['playGame']);
             }catch(err) {
               alert(err);
