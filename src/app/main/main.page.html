@@ -5,7 +5,7 @@
     <ion-row>
       <ion-col size="5"></ion-col>
       <ion-col>
-        <ion-button (click)="newGame()" expand="block" color="primary">New Game</ion-button>
+        <ion-button *ngIf="initiated() && (inProgressGames.length === 0) && (pendingGames.length === 0)" (click)="newGame()" expand="block" color="primary">New Game</ion-button>
       </ion-col>
       <ion-col size="5"></ion-col>
     </ion-row>
@@ -19,14 +19,14 @@
     <ion-row>
       <ion-col size="3"></ion-col>
       <ion-col>
-        <ion-text>Existing game(s) in pending status : {{$checkForActiveGamePending | async }}</ion-text>
+        <ion-text *ngIf="initiated() && (pendingGames.length > 0)">Existing game(s) in pending status : {{pendingGames }}</ion-text>
       </ion-col>
       <ion-col size="3"></ion-col>
     </ion-row>
     <ion-row>
       <ion-col size="3"></ion-col>
       <ion-col>
-        <ion-text>Existing game(s) in active status : {{$checkForActiveGameInProgress | async }}</ion-text>
+        <ion-text *ngIf="initiated() && (inProgressGames.length > 0)">Existing game(s) in active status : {{inProgressGames }}</ion-text>
       </ion-col>
       <ion-col size="3"></ion-col>
     </ion-row>

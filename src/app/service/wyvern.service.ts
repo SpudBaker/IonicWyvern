@@ -43,6 +43,7 @@ export class WyvernService {
            arrString.push(item.id);
          })
         }
+        console.log('checkForActiveGameInProgress()');
         return arrString;
       })
     )
